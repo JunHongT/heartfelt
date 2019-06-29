@@ -1,0 +1,35 @@
+<div class="columns is-multiine is-mobile">
+  <h1> All Users</h1>
+  <% @users.each do |user| %>
+    <% next if user == current_user %>
+      <div class="column is-one-quarter">
+        <article class="media box">
+          <div class="media-left">
+            <figure class="image is-64x64">
+            <%= image_tag user.profile.profile_photo('thumb')%>
+            </figure>
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <strong> <%= user.first_name %></strong>
+            </div>
+            <nav class="level move-right">
+              <div class="level-left">
+                <% if current_user.requesters.where('requests.accepted = ?', 0).include?(user) %>
+                  <%= link_to "Confirm", request_path(id: current_user.received_requests.find_by(requester_id: user.id).id, request: { requester_id: user.id }), method: :put, class: "add-friend-button users-index-button accept-color" %>
+                <% elsif current_user.requesters.include?(user) %>
+                <% elsif !current_user.requestees.include?(user) %>
+                  <%= link_to "Add Friend", requests_path(request: { requestee_id: user.id }), method: :post, class: "button is-info " %>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+        </article>
+      </div>
+    <% end %>
+
+    </div>
+       
+
+        
+   

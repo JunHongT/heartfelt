@@ -1,0 +1,133 @@
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-one-quarter">
+        <nav class="panel">
+        <p class="panel-heading">Profile</p>
+        <div class="panel-block">
+            <article class="media">
+                <div class="media-left">
+                  <figure class="image is-128x128">
+                    <%= image_tag @profile.profile_photo('medium') %>
+                  </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>
+                              <%= @profile.user.first_name %> 
+                              <%= @profile.user.last_name %>
+                            </strong><br />
+                            
+                            
+                        </p>
+                    </div>
+                    <% if @profile.user == current_user %>
+                      <nav class="level move-right">
+                        <div class="level-left">
+                          <%= link_to edit_profile_path(current_user.profile)  do %>
+                            <span class="icon"><i class="fa fa-pencil-alt" aria-hidden="true"></i></span>
+                          <% end %>
+                        </div>
+                      </nav>
+                      <% end %>
+                </div>
+            </article>
+        </div>
+    </nav>
+
+    <article class="media box">
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong>Date of Birth:</strong>
+            <%= @profile.birthday %>
+            <br/>
+        
+            <strong>Gender:</strong>
+            <%= @profile.gender %>
+            <br/>
+        
+            <strong>City:</strong>
+            <%= @profile.location %>
+            <br/>
+        
+            <strong>About Me:</strong>
+            <%= @profile.bio %>
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <article class="media box">
+      <div class="media content">
+        <div class="content">
+          <% if @profile.user.friends.count > 0 %>
+            <strong><%= @profile.user.first_name %>'s friends:</strong>
+            <% @profile.user.friends.each do |friend| %>
+              <article class="media">
+                <div class="media-left">
+                  <figure class="image is-64x64">
+                      <%= link_to(friend.profile) do %>
+                        <%= image_tag friend.profile.profile_photo('thumb') %>
+                      <% end %>
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <div class="content">
+                    <strong> <%= friend.first_name %></strong>
+                  </div>
+                <div>
+              </article>
+          <% end %>
+        </div>
+      </div>
+    </article>
+
+      </div>
+
+     <div class="column">
+      <% if @posts.count > 0 %>
+        <% @posts.each do |post| %>   
+          <div class="box">
+          <article="media">
+            <div class="media-left">
+              <figure class="image is-64x64">
+                <%= link_to(post.user.profile) do %>
+                  <%= image_tag post.user.profile.profile_photo('tac') %>
+                <% end %>
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <strong> 
+                  <%= link_to "#{post.user.first_name}", post.user.profile, class: "user-name" %>
+                  <small><%= link_to distance_of_time_in_words(Time.now, post.created_at)+ ' ago', post, class: 'timestamp' %></small><br />
+                </strong><br />
+                <p><%= post.content %><br/></p>
+              </div>
+              <nav class="level move-right">
+                <div class="level-left">
+                  <%= link_to edit_post_path(post)  do %>
+                    <span class="icon"><i class="fa fa-user-edit" aria-hidden="true"></i></span>
+                  <% end %>
+                  <%= link_to post, method: :delete, data: {confirm: "Are you sure?"}  do%>
+                    <span class="icon"><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                  <% end %>
+                </div>
+              </nav>
+            </div>
+         </article>
+        </div>
+        <% end %>
+      <% end %>   
+     </div>
+    </div>
+  </div>
+</section>
+
+<% end %>
+
+
+
+

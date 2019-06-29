@@ -1,0 +1,35 @@
+<div class="columns is-multiine is-mobile">
+  <h1>Friend Request</h1>
+  <% @users.each do |user| %>
+    <% next if user == current_user %>
+      <div class="column is-one-quarter">
+        <article class="media box">
+          <div class="media-left">
+            <figure class="image is-64x64">
+            <%= link_to(user.profile) do %>
+              <%= image_tag user.profile.profile_photo('thumb')%>
+            <% end %>
+            </figure>
+          </div>
+          <div class="media-content">
+            <div class="content">
+              <strong> <%= user.first_name %></strong>
+              <% if current_user.requesters.where('requests.accepted = ?', 0).include?(user) %>
+                <div class="field">
+                  <div class="control">
+                    <%= link_to "Confirm", request_path(id: current_user.received_requests.find_by(requester_id: user.id).id, request: { requester_id: user.id }), method: :put, class: "button is-info is-medium" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    <% end %>
+
+    </div>
+       
+
+        
+   

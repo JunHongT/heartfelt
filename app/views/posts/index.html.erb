@@ -1,0 +1,58 @@
+<div class="columns is-mobile">
+  <div class="column is-1">
+  </div>
+  <div class="column is-4">
+    <article class = "media box">  
+      <div class="media-left">
+      <figure class="image is-64x64">
+        <%= image_tag current_user.profile.profile_photo('thumb') %>
+      </figure>
+      </div>
+      <div class="media-content">
+        <%= render 'posts/form' %>
+
+        <% if flash[:post_success] %>
+          <div class="flash post-success"><%= flash[:post_success] %></div>
+        <% elsif flash[:post_failure] %>
+          <div class="flash post-failure"><%= flash[:post_failure] %></div>
+        <% end %>
+      </div>
+    </article>
+  </div>
+
+  <div class="column is-6">
+  <% @posts.each do |post| %>
+  <% if post.user.id == current_user.id %>
+  <div class="box">
+    <article="media">
+      <div class="media-left">
+        <figure class="image is-64x64">
+          <%= link_to(post.user.profile) do %>
+            <%= image_tag post.user.profile.profile_photo('tac') %>
+          <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <strong> 
+            <%= link_to "#{post.user.first_name}", post.user.profile, class: "user-name" %>
+            <small><%= link_to distance_of_time_in_words(Time.now, post.created_at)+ ' ago', post, class: 'timestamp' %></small><br />
+          </strong><br />
+          <p><%= post.content %><br/></p>
+        </div>
+        <nav class="level move-right">
+          <div class="level-left">
+            <%= link_to edit_post_path(post)  do %>
+              <span class="icon"><i class="fa fa-user-edit" aria-hidden="true"></i></span>
+            <% end %>
+            <%= link_to post, method: :delete, data: {confirm: "Are you sure?"}  do%>
+              <span class="icon"><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+            <% end %>
+          </div>
+        </nav>
+      </div>
+   </article>
+  </div>
+<% end %>
+<% end %>
+

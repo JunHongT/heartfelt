@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Heartfelt</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= favicon_link_tag 'user-logo.png' %>
+
+    <link    href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar is-info is-fixed-top">
+          <div class="navbar-brand">
+            <%= link_to root_path,  class: "navbar-item" do %>
+              <h1 class="title is-5"> Heartfelt</h1>
+            <% end %>
+          </div>
+            
+          <div id="navbarExample" class="navbar-menu">
+          <div class="navbar-end">
+            <div class="navbar-item">
+            <div class="field is-grouped">
+            <% if user_signed_in? %>
+              <p class="control">
+                <%= link_to current_user.first_name, current_user.profile, class: "button is-info" %>
+              </p>
+              <p>
+                <%= link_to 'Home', root_url, class: "button is-info"%>
+              </p>
+              <p>
+                <%= link_to 'All User', users_index_path,  class: "button is-info" %>
+              </p>
+              <% if current_user.received_requests.where(accepted: 0).count > 0 %>
+                <p>
+                  <%= link_to "Friend Requests (#{current_user.received_requests.where(accepted: 0).count})", requests_path, class:"button is-info" %>
+                </p>
+              <% end %>
+              <p>
+                <%= link_to 'Edit Account', edit_user_registration_path(current_user), class:"button is-info" %>
+              </p>
+              <p>
+                <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class:"button is-info" %>
+              </p>
+            <% else %>
+              <p class="control">
+                <%= link_to 'Login', new_user_session_path, class: "button is-info"%>
+              </p>
+              <p class="control">
+                <%= link_to 'Sign Up', new_user_registration_path, class: "button is-info"%>
+              </p>
+            <% end %>
+            </div>
+            </div>
+          </div>
+          </div>
+  </nav>
+
+    <% flash.each do |message_type, message| %>
+      <% next if message_type[0..4] != 'alert' %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
+
+    <%= yield %>
+
+  </body>
+
+
+
+  <script type="text/javascript">
+  // to replicate focun on each specific respective comment field when clicking on their respective above comment button:
+
+    let commentButton = document.querySelectorAll('.comment-button');
+    let commentField = document.querySelectorAll('.comment-field');
+
+    commentButton.forEach(event => event.addEventListener('click', focus_function));
+
+    function focus_function() {
+       let index = Array.from(commentButton).indexOf(this);
+       // console.log(index);
+       // if (this.style.color == 'red') {
+       //   this.style.color = 'black';
+       // } else {
+       //   this.style.color = 'red';
+       // }
+       commentField[index].focus();
+    }
+
+  </script>
+
+
+</html>
