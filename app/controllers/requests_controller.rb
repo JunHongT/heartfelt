@@ -16,9 +16,20 @@ class RequestsController < ApplicationController
     redirect_to User.find(params[:request][:requester_id]).profile
   end
 
+  def remove
+    @friend_request = Request.find(params[:id])
+    @other_request = Request.find_by(requestee_id: @friend_request.requester_id)
+    @friend_request.remove
+    @other_request.remove
+    
+    flash[:success] = 'Friend Remove'
+    redirect_to User.find(params[:request][:requester_id]).profile
+  end
+
   def index
     @users = current_user.requesters.where('requests.accepted = ?', 0)
   end
+
 
   private
 

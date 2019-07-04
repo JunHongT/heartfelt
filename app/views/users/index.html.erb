@@ -16,7 +16,7 @@
             <nav class="level move-right">
               <div class="level-left">
                 <% if current_user.requesters.where('requests.accepted = ?', 0).include?(user) %>
-                  <%= link_to "Confirm", request_path(id: current_user.received_requests.find_by(requester_id: user.id).id, request: { requester_id: user.id }), method: :put, class: "add-friend-button users-index-button accept-color" %>
+                <%= link_to "Confirm", request_path(id: current_user.received_requests.find_by(requester_id: user.id).id, request: { requester_id: user.id }), method: :put, class: "button is-info" %>
                 <% elsif current_user.requesters.include?(user) %>
                 <% elsif !current_user.requestees.include?(user) %>
                   <%= link_to "Add Friend", requests_path(request: { requestee_id: user.id }), method: :post, class: "button is-info " %>

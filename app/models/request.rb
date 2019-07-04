@@ -9,4 +9,9 @@ class Request < ApplicationRecord
                     accepted: 1)
   end
 
+  def remove
+    self.update_attributes(accepted: 0)
+    self.destroy
+  end
+
 end

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: 'posts#index'
 
   get 'users/index'
+  get 'friend/remove', to: 'requests#remove'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get '/auth/:provider/callback', to: 'sessions#create'
 
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
   resources :likes, only: [:create, :destroy]
 
   resources :profiles, only: [:show, :edit, :update]
-  resources :requests, only: [:create, :update, :index]
+  resources :requests, only: [:create, :update, :index, :remove]
+
 
 end

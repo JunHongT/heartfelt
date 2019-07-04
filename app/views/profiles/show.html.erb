@@ -17,9 +17,7 @@
                             <strong>
                               <%= @profile.user.first_name %> 
                               <%= @profile.user.last_name %>
-                            </strong><br />
-                            
-                            
+                            </strong><br/>
                         </p>
                     </div>
                     <% if @profile.user == current_user %>
@@ -77,8 +75,18 @@
                   <div class="content">
                     <strong> <%= friend.first_name %></strong>
                   </div>
+                  <% if @profile.user == current_user %>
+                  <nav class="level move-right">
+                    <div class="level-left">
+                      <%= link_to friend_remove_path(id: @profile.user.received_requests.find_by(requester_id: friend.id).id, request: { requester_id: friend.id }), data: {confirm: "Are you sure?"}  do%>
+                        <span class="icon"><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
+                      <% end %>
+                    </div>
+                  </nav>
+                  <% end %>
                 <div>
               </article>
+              
           <% end %>
         </div>
       </div>
@@ -87,42 +95,7 @@
       </div>
 
      <div class="column">
-      <% if @posts.count > 0 %>
-        <% @posts.each do |post| %>   
-          <div class="box">
-          <article="media">
-            <div class="media-left">
-              <figure class="image is-64x64">
-                <%= link_to(post.user.profile) do %>
-                  <%= image_tag post.user.profile.profile_photo('tac') %>
-                <% end %>
-              </figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <strong> 
-                  <%= link_to "#{post.user.first_name}", post.user.profile, class: "user-name" %>
-                  <small><%= link_to distance_of_time_in_words(Time.now, post.created_at)+ ' ago', post, class: 'timestamp' %></small><br />
-                </strong><br />
-                <p><%= post.content %><br/></p>
-              </div>
-              <nav class="level move-right">
-                <div class="level-left">
-                  <%= link_to edit_post_path(post)  do %>
-                    <span class="icon"><i class="fa fa-user-edit" aria-hidden="true"></i></span>
-                  <% end %>
-                  <%= link_to post, method: :delete, data: {confirm: "Are you sure?"}  do%>
-                    <span class="icon"><i class="fa fa-trash-alt" aria-hidden="true"></i></span>
-                  <% end %>
-                </div>
-              </nav>
-            </div>
-         </article>
-        </div>
-        <% end %>
-      <% end %>   
-     </div>
-    </div>
+     
   </div>
 </section>
 
