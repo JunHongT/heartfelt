@@ -19,10 +19,16 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def default
+      @profile = Profile.find(params[:id])
+      @profile.back
+      redirect_to profile
+  end
+
   private
 
   def profile_params
-    params.require(:profile).permit(:birthday, :gender, :location, :bio, :avatar, :cover)
+    params.require(:profile).permit(:birthday, :gender, :location, :bio, :avatar, :cover, :expression)
   end
 
   def profile

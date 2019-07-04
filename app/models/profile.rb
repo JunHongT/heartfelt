@@ -10,9 +10,14 @@ class Profile < ApplicationRecord
   validates :gender, length: { maximum: 100 }
   validates :location, length: { maximum: 255 }
   validates :bio, length: { maximum: 2000 }
+  validates :expression, length: {maximum: 100 }
 
   has_attached_file :cover, styles: { large: "851x358#" }
   validates_attachment_content_type :cover, content_type: ["image/jpg", "image/jpeg", "image/png"]
+
+  def back
+    self.update_attributes(expression: "rgb(233,235,238)")
+  end
 
   def birth_date_cannot_be_in_the_future
     errors.add(:birthday, "can't be in the future") if

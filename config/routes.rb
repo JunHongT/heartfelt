@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   get 'users/index'
   get 'friend/remove', to: 'requests#remove'
+  get 'default/color', to: 'profiles#default'
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get '/auth/:provider/callback', to: 'sessions#create'
 
