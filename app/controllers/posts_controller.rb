@@ -13,6 +13,33 @@ class PostsController < ApplicationController
     if @post.save
       flash[:post_success] = 'Post successful!'
       redirect_to root_url
+
+       # Initialising spell checker
+       spell = Gingerice::Parser.new
+       spell.parse @post.content
+ 
+       # Corrected spelling is within spell.result
+       puts spell.result
+ 
+       # Create an instance for usage
+       analyzer = Sentimental.new
+ 
+       # Load the default sentiment dictionaries
+       analyzer.load_defaults
+ 
+       # Set a global threshold
+       analyzer.threshold = 0.2
+       puts "\nSentiment Analysis Results"
+       puts analyzer.sentiment spell.result
+       sentiment_score = analyzer.score spell.result
+       puts sentiment_score
+       
+       # actual colour processing is here
+       if sentiment_score > 0.2
+         puts "Yellow"
+       elsif sentiment_score < -0.2
+         puts "Blue"
+       end
     else
       flash[:post_failure] = 'Post did not save - text content required.'
       redirect_to root_url

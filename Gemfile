@@ -26,6 +26,19 @@ gem 'kaminari'
 gem 'bulma-rails', '~> 0.7.5'
 gem 'simple_form', '~> 4.1'
 
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# stop word filter
+gem 'stopwords-filter', require: 'stopwords'
+
+#sentimentanalysis
+gem 'sentimental', '~> 1.0', '>= 1.0.3'
+
+#spell check
+gem 'gingerice'
+
 # gem 'omniauth'
 # gem 'omniauth-twitter'
 gem 'omniauth-facebook'

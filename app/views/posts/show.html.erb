@@ -30,38 +30,6 @@
 
   <br/>
 
-  <% if @post.comments.count > 0 %>
-  <div class="all-comments">
-    <% @post.comments.each do |comment| %>
-      <% user = User.find(comment.user_id) %>
-      <%= link_to(user.profile) do %>
-        <%= image_tag user.profile.profile_photo('tac'), class: 'tac-image comment-image' %>
-      <% end %>
-
-      <p class="comment">
-        <span class="comment-content">
-          <strong><%= link_to "#{user.first_name} #{user.last_name}", user.profile, class: "user-name" %></strong> <%= comment.content %>
-        </span>
-        <% if current_user.id == comment.user_id %>
-          <span class="edit-delete-comment">
-            <%= link_to 'Edit', edit_comment_path(comment) %>
-            <%= link_to 'Delete', comment, method: :delete, data: {confirm: "Are you sure?"} %>
-          </span>
-        <% end %>
-      </p>
-    <% end %>
-  </div>
-  <% end %>
-
-  <%= form_for(@comment) do |c| %>
-    <%= link_to(current_user.profile) do %>
-      <%= image_tag current_user.profile.profile_photo('tac'), class: 'tac-image new-comment-image' %>
-    <% end %>
-
-    <%= c.text_area :content, class: "comment-field", placeholder: "Write a comment...", rows: "1" %>
-    <%= c.submit "Comment" %>
-    <%= c.hidden_field :post_id, value: @post.id %>
-  <% end %>
 
 </div>
 </div>
