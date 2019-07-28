@@ -38,7 +38,7 @@
             <%= link_to "#{post.user.first_name}", post.user.profile, class: "user-name" %>
             <small><%= link_to distance_of_time_in_words(Time.now, post.created_at)+ ' ago', post, class: 'timestamp' %></small><br />
           </strong><br />
-          <p><%= post.content %><br/></p>
+          <p style="color: <%= post.emotion if post.emotion %>"><b> <%= post.content %></b> <br/></p>
         </div>
         <nav class="level move-right">
           <div class="level-left">

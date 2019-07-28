@@ -36,9 +36,13 @@ class PostsController < ApplicationController
        
        # actual colour processing is here
        if sentiment_score > 0.2
-         puts "Yellow"
+          @post.emotion = "Pink"
+          @post.save
+          
        elsif sentiment_score < -0.2
-         puts "Blue"
+          @post.emotion = "Purple"
+          @post.save
+         
        end
     else
       flash[:post_failure] = 'Post did not save - text content required.'
