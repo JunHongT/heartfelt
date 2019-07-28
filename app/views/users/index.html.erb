@@ -6,7 +6,9 @@
         <article class="media box">
           <div class="media-left">
             <figure class="image is-64x64">
-            <%= image_tag user.profile.profile_photo('thumb')%>
+            <%= link_to(user.profile) do %>
+              <%= image_tag user.profile.profile_photo('thumb')%>
+            <% end %>
             </figure>
           </div>
           <div class="media-content">
